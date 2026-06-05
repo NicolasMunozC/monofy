@@ -5,13 +5,13 @@ Monofy any text by giving every character the width of the widest one.
 ## Install
 
 ```bash
-npm install monofy
+npm install @nicholasniculas/monofy
 ```
 
 ## Usage
 
 ```ts
-import Monofy from "monofy";
+import Monofy from "@nicholasniculas/monofy";
 
 const html = Monofy("12:59");
 ```
@@ -37,7 +37,7 @@ const html = Monofy("12:59");
 ## React
 
 ```tsx
-import { Monofy } from "monofy/react";
+import { Monofy } from "@nicholasniculas/monofy/react";
 
 export function Clock() {
   const timer = "12:59";
@@ -56,21 +56,32 @@ npm install react
 
 ```ts
 Monofy("12:59", {
-  width: 14,
-  font: "700 48px Inter",
+  width: "auto",
+  font: '900 360px "Versus"',
+  characterType: "numeric",
+  measurement: "safe",
+  widthOffset: -2,
+  ignore: [":"],
   className: "monofy-char",
   align: "center",
-  ignore: [":"],
 });
 ```
 
 ## Notes
 
 - `width` defaults to `"auto"`.
-- Automatic width uses the widest character in the text.
+- `characterType` defines which set of characters is measured.
+  - `"full"` (default): uses the current text.
+  - `"numeric"`: measures `0-9`.
+  - `"alphabetic"`: measures letters.
+  - `"alphanumeric"`: measures letters and digits.
+- `measurement` is `"safe"` (default) or `"visual"`.
+  - `"safe"` uses typographic advance width.
+  - `"visual"` uses actual ink bounds.
+- `widthOffset` adds or subtracts pixels from the measured width.
+- `ignore` leaves specific characters at their natural width.
 - `auto` needs a browser environment when `width` is not numeric.
 - For `auto` to be accurate, `font` must match the real `font-weight`, `font-size`, and `font-family` used by the text.
-- `ignore` leaves specific characters at their natural width.
 - `monofy` returns HTML string.
 - `monofy/react` returns React nodes.
 - The text inherits styling from its parent element.
