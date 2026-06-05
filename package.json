@@ -1,0 +1,57 @@
+{
+  "name": "@nicholasniculas/monofy",
+  "version": "0.1.0",
+  "description": "Monospace any text while keeping its original font.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolas/monofy.git"
+  },
+  "homepage": "https://github.com/nicolas/monofy#readme",
+  "bugs": {
+    "url": "https://github.com/nicolas/monofy/issues"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts src/react.tsx --format esm,cjs --dts --external react",
+    "dev": "bun src/index.ts",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "monospace",
+    "font",
+    "text",
+    "css",
+    "javascript",
+    "typescript",
+    "typography",
+    "dom"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.16",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}
