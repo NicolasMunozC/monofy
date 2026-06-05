@@ -67,6 +67,39 @@ Monofy("12:59", {
 });
 ```
 
+## React (auto font from element)
+
+```tsx
+import { MonofyText } from "@nicholasniculas/monofy/react-text";
+
+export function Clock({ value }: { value: string }) {
+  return (
+    <MonofyText
+      as="h1"
+      text={value}
+      characterType="numeric"
+      ignore={[":"]}
+    />
+  );
+}
+```
+
+The component reads the computed font from its own element, so it adapts when CSS, `useAutoFit`, or media queries change the size.
+
+You can also pass an external ref:
+
+```tsx
+const ref = useRef<HTMLHeadingElement>(null);
+
+<MonofyText
+  as="h1"
+  text={value}
+  sourceRef={ref}
+  characterType="numeric"
+  ignore={[":"]}
+/>
+```
+
 ## Notes
 
 - `width` defaults to `"auto"`.

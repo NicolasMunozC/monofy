@@ -6,18 +6,30 @@ import {
   type MonofyOptions,
 } from "./core";
 
-type MonofyReactOptions = MonofyOptions;
+type MonofyElementOptions = Omit<MonofyOptions, "font"> & {
+  font?: string;
+};
 
-export function Monofy(text: string, options: MonofyReactOptions = {}): ReactNode {
+function readComputedFont(element: HTMLElement) {
+  const styles = getComputedStyle(element);
+  return `${styles.fontWeight} ${styles.fontSize} ${styles.fontFamily}`;
+}
+
+export function monofyFromElement(
+  element: HTMLElement | null,
+  text: string,
+  options: MonofyElementOptions = {}
+): ReactNode {
+  if (!element) return null;
   if (typeof text !== "string") {
     throw new TypeError("Monofy: text must be a string.");
   }
-
   if (text.length === 0) return null;
 
   const className = options.className ?? "monofy-char";
   const align = options.align ?? "center";
-  const resolution = resolveMonofy(text, options);
+  const font = options.font ?? readComputedFont(element);
+  const resolution = resolveMonofy(text, { ...options, font });
   const ignored = new Set(options.ignore ?? []);
   const debug = options.debug;
   const segments = monofySegments(text);
@@ -70,8 +82,4 @@ function rainbowColor(index: number) {
   return `hsl(${hue} 90% 60% / 0.35)`;
 }
 
-export type { MonofyReactOptions };
-export { MonofyText } from "./react-text";
-export type { MonofyTextProps } from "./react-text";
-export { monofyFromElement } from "./element";
-export type { MonofyElementOptions } from "./element";
+export type { MonofyElementOptions };
