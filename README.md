@@ -60,6 +60,7 @@ Monofy("12:59", {
   font: "700 48px Inter",
   className: "monofy-char",
   align: "center",
+  ignore: [":"],
 });
 ```
 
@@ -69,6 +70,7 @@ Monofy("12:59", {
 - Automatic width uses the widest character in the text.
 - `auto` needs a browser environment when `width` is not numeric.
 - For `auto` to be accurate, `font` must match the real `font-weight`, `font-size`, and `font-family` used by the text.
+- `ignore` leaves specific characters at their natural width.
 - `monofy` returns HTML string.
 - `monofy/react` returns React nodes.
 - The text inherits styling from its parent element.

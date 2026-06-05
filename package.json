@@ -1,6 +1,6 @@
 {
   "name": "@nicholasniculas/monofy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Monospace any text while keeping its original font.",
   "type": "module",
   "repository": {

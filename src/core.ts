@@ -3,6 +3,7 @@ export type MonofyOptions = {
   font?: string;
   className?: string;
   align?: "left" | "center" | "right";
+  ignore?: string[];
 };
 
 const DEFAULT_CLASS_NAME = "monofy-char";
@@ -18,6 +19,7 @@ export function monofyHtml(text: string, options: MonofyOptions = {}) {
   const className = options.className ?? DEFAULT_CLASS_NAME;
   const align = options.align ?? "center";
   const width = resolveMonofyWidth(text, options);
+  const ignored = new Set(options.ignore ?? []);
   const segments = segmentText(text);
 
   return segments
@@ -25,8 +27,11 @@ export function monofyHtml(text: string, options: MonofyOptions = {}) {
       if (segment === "\n") return "<br>";
 
       const safeText = segment === " " ? "&nbsp;" : escapeHtml(segment);
+      const style = ignored.has(segment)
+        ? `display:inline-block;text-align:${align};white-space:pre;`
+        : `display:inline-block;width:${width}px;text-align:${align};white-space:pre;`;
 
-      return `<span class="${className}" style="display:inline-block;width:${width}px;text-align:${align};white-space:pre;">${safeText}</span>`;
+      return `<span class="${className}" style="${style}">${safeText}</span>`;
     })
     .join("");
 }

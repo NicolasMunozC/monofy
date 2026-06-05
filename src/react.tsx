@@ -14,6 +14,7 @@ export function Monofy(text: string, options: MonofyReactOptions = {}): ReactNod
   const className = options.className ?? "monofy-char";
   const align = options.align ?? "center";
   const width = resolveMonofyWidth(text, options);
+  const ignored = new Set(options.ignore ?? []);
   const segments = monofySegments(text);
 
   return segments.map((segment, index) => {
@@ -28,7 +29,7 @@ export function Monofy(text: string, options: MonofyReactOptions = {}): ReactNod
         className,
         style: {
           display: "inline-block",
-          width: `${width}px`,
+          width: ignored.has(segment) ? undefined : `${width}px`,
           textAlign: align,
           whiteSpace: "pre",
         },
